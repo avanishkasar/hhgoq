@@ -1,0 +1,92 @@
+{
+  "case_id": "HHG-001",
+  "case": {
+    "status": "closed_legitimate",
+    "verdict": "legitimate",
+    "fraud_probability": 0.25,
+    "pattern": "card_not_present_new_device",
+    "pattern_description": "New account with unknown device and moderate risk score.",
+    "affected_txn_ids": [
+      "3514030"
+    ],
+    "first_suspicious_txn_id": "3514030",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 77.07,
+    "evidence": [
+      {
+        "claim": "High risk score (0.61) on new account with null device profile.",
+        "source": "document",
+        "ref": "Trigger; Device Profile; Customer Profile",
+        "entity_ids": [
+          "C12382",
+          "C12382-K1",
+          "3514030"
+        ]
+      },
+      {
+        "claim": "[SIMULATED] Customer contacted by SMS; responded that the transaction was authorized by them.",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": []
+      },
+      {
+        "claim": "New account with null device profile",
+        "source": "document|customer",
+        "ref": "Total historical transactions: 0; Device Profile: null",
+        "entity_ids": [
+          "C12382",
+          "C12382-K1"
+        ]
+      },
+      {
+        "claim": "Moderate risk score on flagged txn",
+        "source": "trigger",
+        "ref": "risk_score ... at 0.61",
+        "entity_ids": [
+          "3514030"
+        ]
+      }
+    ],
+    "similar_prior_cases": [],
+    "summary": "New account transaction triggered risk score of 0.61 on unknown device. Customer verified authorization via SMS response, reducing effective fraud probability to 0.25. Case closed as legitimate with $77.07 exposure.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-001"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 2,
+      "assumed_response": "Customer contacted by SMS; responded that the transaction was authorized by them."
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1: fraud_prob 0.61 < 0.70 on weak signal, need verification before block"
+      }
+    ],
+    "final": [
+      {
+        "action": "CLOSE_NO_FRAUD",
+        "route": "auto",
+        "reason": "R3: Customer confirmed authorization via SMS"
+      }
+    ],
+    "what_changed": "Customer responded to SMS verification confirming transaction was authorized by them"
+  },
+  "sar": {
+    "file": false,
+    "reason": "Fraud probability low (0.25), exposure $77.07 < $1000, single card, documented pattern",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 77.07,
+    "activity_dates": []
+  },
+  "stop_reason": "Customer verified authorization offsets new device risk on low-value transaction.",
+  "tool_calls": 8,
+  "tokens": 12077,
+  "latency_s": 268.5
+}

@@ -1,0 +1,81 @@
+{
+  "case_id": "HHG-015",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.88,
+    "pattern": "card_not_present_new_device",
+    "pattern_description": "High-value online purchase ($599.94) from newly observed device with risk score 0.77.",
+    "affected_txn_ids": [
+      "3464869"
+    ],
+    "first_suspicious_txn_id": "3464869",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 599.94,
+    "evidence": [
+      {
+        "claim": "Trigger event: risk_score 0.77 (online)",
+        "source": "trigger",
+        "ref": "txn:3464869",
+        "entity_ids": [
+          "C03042",
+          "3464869"
+        ]
+      },
+      {
+        "claim": "Card C03042-K1 associated with Customer C03042",
+        "source": "graph",
+        "ref": "TigerGraph: OWNS edge",
+        "entity_ids": [
+          "C03042",
+          "C03042-K1"
+        ]
+      }
+    ],
+    "similar_prior_cases": [],
+    "summary": "Transaction 3464869 flagged for $599.94 on card C03042-K1 from unverified device. Step-up authentication expired without response. Card permanently blocked per rule R7.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-015"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 1,
+      "assumed_response": "2FA push verification unacknowledged."
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "BLOCK_CARD_TEMPORARY",
+        "route": "auto",
+        "reason": "R2: High risk score (0.77) on high-value single transaction"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD_PERMANENT",
+        "route": "L1",
+        "reason": "R7: No response to step-up authentication within challenge window"
+      }
+    ],
+    "what_changed": "2FA push notification timed out without response; escalated temporary hold to permanent block."
+  },
+  "sar": {
+    "file": false,
+    "reason": "Single card incident below $1,000 threshold",
+    "narrative": "",
+    "subjects": [
+      "C03042"
+    ],
+    "total_amount_usd": 0.0,
+    "activity_dates": [
+      "2016-12-01"
+    ]
+  },
+  "stop_reason": "Policy threshold satisfied: definitive evidence and action determined.",
+  "tool_calls": 6,
+  "tokens": 2840,
+  "latency_s": 14.2
+}

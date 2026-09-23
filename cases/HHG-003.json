@@ -1,0 +1,52 @@
+{
+  "case_id": "HHG-003",
+  "case": {
+    "status": "open",
+    "verdict": "uncertain",
+    "fraud_probability": 0.5,
+    "pattern": "none",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3530164"
+    ],
+    "first_suspicious_txn_id": "3530164",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 49.0,
+    "evidence": [],
+    "similar_prior_cases": [],
+    "summary": "Customer reported unauthorized $49 purchase. Fraud probability 0.5 (uncertain). Per R1, verify with customer before blocking. Exposure below SAR threshold.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-003"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1"
+      }
+    ],
+    "final": [
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1"
+      }
+    ],
+    "what_changed": "Customer reported unauthorized transaction $49.00."
+  },
+  "sar": {
+    "file": false,
+    "reason": "",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0.0,
+    "activity_dates": []
+  },
+  "stop_reason": "LLM assessment failed; defaulting to uncertain.",
+  "tool_calls": 7,
+  "tokens": 9594,
+  "latency_s": 437.0
+}

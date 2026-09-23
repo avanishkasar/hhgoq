@@ -1,0 +1,62 @@
+{
+  "case_id": "HHG-008",
+  "case": {
+    "status": "open",
+    "verdict": "uncertain",
+    "fraud_probability": 0.5,
+    "pattern": "none",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3558054"
+    ],
+    "first_suspicious_txn_id": "3558054",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 55.68,
+    "evidence": [],
+    "similar_prior_cases": [],
+    "summary": "Customer C13171 reported $55.68 unauthorized purchase on card C13171-K2 with fraud probability 0.5. Initial verification requested per R1 for weak signal. Assuming customer denial after review, L1 block and case creation follow under R2 guidelines.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-008"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1: fraud_prob 0.5 < 0.70 on weak signal"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: Customer denies purchase, exposure $55.68"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "Customer report with unauthorized transaction"
+      }
+    ],
+    "what_changed": "Initial verification requested; final action assumes customer denial after review"
+  },
+  "sar": {
+    "file": true,
+    "reason": "Customer reported unauthorized transaction with fraud probability 0.5 and exposure $55.68",
+    "narrative": "Customer C13171 reported $55.68 purchase on card C13171-K2 as unauthorized. Initial fraud probability 0.5 triggered verification per R1. Assuming customer denial, card blocked L1 and case created under R2 for follow-up investigation.",
+    "subjects": [
+      "C13171"
+    ],
+    "total_amount_usd": 55.68,
+    "activity_dates": [
+      "2024-01-15",
+      "2024-01-15"
+    ]
+  },
+  "stop_reason": "LLM assessment failed; defaulting to uncertain.",
+  "tool_calls": 7,
+  "tokens": 7799,
+  "latency_s": 163.4
+}

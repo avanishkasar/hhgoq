@@ -1,0 +1,77 @@
+{
+  "case_id": "HHG-007",
+  "case": {
+    "status": "open",
+    "verdict": "fraud",
+    "fraud_probability": 0.9,
+    "pattern": "card_not_present_new_device",
+    "pattern_description": "New account/device with high risk score and no historical context.",
+    "affected_txn_ids": [],
+    "first_suspicious_txn_id": "",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 0.0,
+    "evidence": [
+      {
+        "claim": "Real-time model flagged transaction as high risk",
+        "source": "document",
+        "ref": "risk_score — Real-time model scored... at 0.87",
+        "entity_ids": [
+          "3514948",
+          "C09933-K2",
+          "C09933"
+        ]
+      },
+      {
+        "claim": "Device profile is null indicating new device usage",
+        "source": "document",
+        "ref": "DEVICE PROFILE: null",
+        "entity_ids": [
+          "C09933-K2"
+        ]
+      },
+      {
+        "claim": "Customer has zero historical transactions",
+        "source": "document",
+        "ref": "Total historical transactions: 0",
+        "entity_ids": [
+          "C09933"
+        ]
+      }
+    ],
+    "similar_prior_cases": [],
+    "summary": "Case HHG-007: verdict=fraud, pattern=card_not_present_new_device, fraud_probability=0.90, exposure=$0.00. Key evidence: Real-time model flagged transaction as high risk Device profile is null indicating new device usage Customer has zero historical transactions.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-007"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "ESCALATE_TO_ANALYST",
+        "route": "auto",
+        "reason": "R8: LLM act node failed; defaulting to escalation"
+      }
+    ],
+    "final": [
+      {
+        "action": "ESCALATE_TO_ANALYST",
+        "route": "auto",
+        "reason": "R8: LLM act node failed; defaulting to escalation"
+      }
+    ],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": false,
+    "reason": "Act node failed",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0.0,
+    "activity_dates": []
+  },
+  "stop_reason": "Risk score 0.9 meets threshold with 3 independent signals (model, device, history).",
+  "tool_calls": 7,
+  "tokens": 10182,
+  "latency_s": 216.5
+}

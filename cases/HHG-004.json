@@ -1,0 +1,71 @@
+{
+  "case_id": "HHG-004",
+  "case": {
+    "status": "open",
+    "verdict": "fraud",
+    "fraud_probability": 0.85,
+    "pattern": "card_not_present_fraud",
+    "pattern_description": "Direct customer denial with empty transaction history suggests unauthorized use or new account takeover.",
+    "affected_txn_ids": [],
+    "first_suspicious_txn_id": "",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 0.0,
+    "evidence": [
+      {
+        "claim": "[SIMULATED] Customer confirms they did not make this transaction and states their card has been in their possession at all times.",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": []
+      },
+      {
+        "claim": "Customer denies purchase of $128.33",
+        "source": "customer",
+        "ref": "3583227",
+        "entity_ids": [
+          "C08106"
+        ]
+      }
+    ],
+    "similar_prior_cases": [],
+    "summary": "Case HHG-004: verdict=fraud, pattern=card_not_present_fraud, fraud_probability=0.85, exposure=$0.00. Key evidence: [SIMULATED] Customer confirms they did not make this transaction and states their card has been in their possession at all times. Customer denies purchase of $128.33.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-004"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 2,
+      "assumed_response": "Customer confirms they did not make this transaction and states their card has been in their possession at all times."
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "ESCALATE_TO_ANALYST",
+        "route": "auto",
+        "reason": "R8: LLM act node failed; defaulting to escalation"
+      }
+    ],
+    "final": [
+      {
+        "action": "ESCALATE_TO_ANALYST",
+        "route": "auto",
+        "reason": "R8: LLM act node failed; defaulting to escalation"
+      }
+    ],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": false,
+    "reason": "Act node failed",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0.0,
+    "activity_dates": []
+  },
+  "stop_reason": "Probability threshold (0.85) met with customer denial signals.",
+  "tool_calls": 8,
+  "tokens": 15445,
+  "latency_s": 696.2
+}

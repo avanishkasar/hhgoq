@@ -1,0 +1,90 @@
+{
+  "case_id": "HHG-010",
+  "case": {
+    "status": "open",
+    "verdict": "fraud",
+    "fraud_probability": 0.9,
+    "pattern": "card_not_present_new_device",
+    "pattern_description": "Online purchase on new account with unknown device and billing region.",
+    "affected_txn_ids": [
+      "3506725"
+    ],
+    "first_suspicious_txn_id": "3506725",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 1000.03,
+    "evidence": [
+      {
+        "claim": "[SIMULATED] Customer contacted by SMS; responded that the transaction was authorized by them.",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": []
+      },
+      {
+        "claim": "High risk score on new account",
+        "source": "document",
+        "ref": "risk_score:0.90, Total historical transactions:0",
+        "entity_ids": [
+          "3506725",
+          "C10434"
+        ]
+      },
+      {
+        "claim": "New device profile",
+        "source": "document",
+        "ref": "DEVICE PROFILE:null",
+        "entity_ids": []
+      }
+    ],
+    "similar_prior_cases": [],
+    "summary": "Customer confirmed $1,000.03 transaction via SMS on new account with unknown device profile and high risk score (0.9). Despite confirmation, the card_not_present_new_device pattern warrants case creation and SAR filing due to exposure exceeding $1,000.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-010"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 2,
+      "assumed_response": "Customer contacted by SMS; responded that the transaction was authorized by them."
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1 - fraud_prob 0.9 > 0.70 on weak signal, need confirmation before block"
+      }
+    ],
+    "final": [
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "High risk score (0.9) + new device profile despite customer confirmation"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "R2 - exposure > $1000 and new device pattern"
+      }
+    ],
+    "what_changed": "Customer confirmed transaction via SMS, but high fraud probability (0.9) on new account with unknown device warrants case creation"
+  },
+  "sar": {
+    "file": true,
+    "reason": "fraud_prob 0.9 + exposure > $1000 + new device pattern meets SAR criteria",
+    "narrative": "Customer C10434 authorized transaction 3506725 ($1,000.03) via SMS on new account with unknown device profile. Risk score of 0.9 indicates strong fraud signal despite customer confirmation. Pattern shows card_not_present_new_device which is suspicious for new accounts.",
+    "subjects": [
+      "C10434"
+    ],
+    "total_amount_usd": 1000.03,
+    "activity_dates": [
+      "2024-01-15",
+      "2024-01-15"
+    ]
+  },
+  "stop_reason": "Risk score 0.9 meets >=0.85 threshold with new device/zero history signals.",
+  "tool_calls": 8,
+  "tokens": 13253,
+  "latency_s": 267.8
+}

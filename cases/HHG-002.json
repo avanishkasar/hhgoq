@@ -1,0 +1,105 @@
+{
+  "case_id": "HHG-002",
+  "case": {
+    "status": "open",
+    "verdict": "uncertain",
+    "fraud_probability": 0.79,
+    "pattern": "card_not_present_new_device",
+    "pattern_description": "Online purchase on unknown device with zero transaction history.",
+    "affected_txn_ids": [],
+    "first_suspicious_txn_id": "",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 0.0,
+    "evidence": [
+      {
+        "claim": "[SIMULATED] Customer contacted by SMS; responded that the transaction was authorized by them.",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": []
+      },
+      {
+        "claim": "[SIMULATED] Analyst confirms no additional account flags in the past 30 days.",
+        "source": "customer",
+        "ref": "evidence_request:2",
+        "entity_ids": []
+      },
+      {
+        "claim": "High risk score on online txn with null device profile and zero history.",
+        "source": "document",
+        "ref": "3478782",
+        "entity_ids": [
+          "3478782",
+          "C11891-K1",
+          "C11891"
+        ]
+      },
+      {
+        "claim": "[SIMULATED] Step-up authentication request sent; no response received within 30 minutes.",
+        "source": "customer",
+        "ref": "evidence_request:3",
+        "entity_ids": []
+      },
+      {
+        "claim": "High risk score on new account",
+        "source": "document",
+        "ref": "risk_score: 0.79, Total historical transactions: 0",
+        "entity_ids": [
+          "3478782",
+          "C11891-K1",
+          "C11891"
+        ]
+      }
+    ],
+    "similar_prior_cases": [],
+    "summary": "Case HHG-002: verdict=uncertain, pattern=card_not_present_new_device, fraud_probability=0.79, exposure=$0.00. Key evidence: [SIMULATED] Customer contacted by SMS; responded that the transaction was authorized by them. [SIMULATED] Analyst confirms no additional account flags in the past 30 days. High risk score on online txn with null device profile and zero history..",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-002"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 2,
+      "assumed_response": "Customer contacted by SMS; responded that the transaction was authorized by them."
+    },
+    {
+      "type": "analyst_info",
+      "asked_after_step": 2,
+      "assumed_response": "Analyst confirms no additional account flags in the past 30 days."
+    },
+    {
+      "type": "step_up_auth",
+      "asked_after_step": 2,
+      "assumed_response": "Step-up authentication request sent; no response received within 30 minutes."
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "ESCALATE_TO_ANALYST",
+        "route": "auto",
+        "reason": "R8: LLM act node failed; defaulting to escalation"
+      }
+    ],
+    "final": [
+      {
+        "action": "ESCALATE_TO_ANALYST",
+        "route": "auto",
+        "reason": "R8: LLM act node failed; defaulting to escalation"
+      }
+    ],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": false,
+    "reason": "Act node failed",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0.0,
+    "activity_dates": []
+  },
+  "stop_reason": "LLM assessment failed; defaulting to uncertain.",
+  "tool_calls": 10,
+  "tokens": 28321,
+  "latency_s": 1138.8
+}

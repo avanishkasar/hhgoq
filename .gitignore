@@ -1,0 +1,24 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Large Datasets (>100MB - do not commit to GitHub)
+HHGOA_IEEE/transactions.csv
+HHGOA_IEEE/identity.csv
+HHGOA_IEEE/*.zip
+HHGOA_IEEE/*.tar.gz
+
+# Streamlit
+.streamlit/
+
+# OS
+.DS_Store
+Thumbs.db

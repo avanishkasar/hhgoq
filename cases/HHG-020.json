@@ -1,0 +1,81 @@
+{
+  "case_id": "HHG-020",
+  "case": {
+    "status": "closed_legitimate",
+    "verdict": "legitimate",
+    "fraud_probability": 0.22,
+    "pattern": "none",
+    "pattern_description": "Normal travel purchase consistent with customer's historical overseas transactions.",
+    "affected_txn_ids": [
+      "3509359"
+    ],
+    "first_suspicious_txn_id": "3509359",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 125.08,
+    "evidence": [
+      {
+        "claim": "Trigger event: risk_score 0.52 (online)",
+        "source": "trigger",
+        "ref": "txn:3509359",
+        "entity_ids": [
+          "C12265",
+          "3509359"
+        ]
+      },
+      {
+        "claim": "Card C12265-K2 associated with Customer C12265",
+        "source": "graph",
+        "ref": "TigerGraph: OWNS edge",
+        "entity_ids": [
+          "C12265",
+          "C12265-K2"
+        ]
+      }
+    ],
+    "similar_prior_cases": [],
+    "summary": "Transaction 3509359 scored 0.52 due to unusual location. Step-up push verification confirmed customer was traveling for a conference. Case closed as legitimate with travel memo added.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-020"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 1,
+      "assumed_response": "Customer approved via app notification: 'Traveling for conference in Goa.'"
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1: Borderline risk score (0.52); verify before blocking cardholder"
+      }
+    ],
+    "final": [
+      {
+        "action": "CLOSE_NO_FRAUD",
+        "route": "auto",
+        "reason": "R3: Customer validated active travel itinerary via mobile banking app"
+      }
+    ],
+    "what_changed": "Customer verified ongoing business travel in transaction region; travel notice logged to profile."
+  },
+  "sar": {
+    "file": false,
+    "reason": "Legitimate authorized activity",
+    "narrative": "",
+    "subjects": [
+      "C12265"
+    ],
+    "total_amount_usd": 0.0,
+    "activity_dates": [
+      "2016-12-01"
+    ]
+  },
+  "stop_reason": "Policy threshold satisfied: definitive evidence and action determined.",
+  "tool_calls": 6,
+  "tokens": 2840,
+  "latency_s": 14.2
+}

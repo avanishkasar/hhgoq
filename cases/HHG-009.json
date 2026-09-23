@@ -1,0 +1,83 @@
+{
+  "case_id": "HHG-009",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.85,
+    "pattern": "card_not_present_new_device",
+    "pattern_description": "New account (0 history) combined with unknown device profile suggests a new device used for an online purchase inconsistent with prior behavior.",
+    "affected_txn_ids": [
+      "3581141"
+    ],
+    "first_suspicious_txn_id": "3581141",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 30.02,
+    "evidence": [
+      {
+        "claim": "Customer reported unauthorized $30.02 purchase on card C08299-K1.",
+        "source": "document",
+        "ref": "customer_report message: 'I never made this $30.02 purchase.'",
+        "entity_ids": [
+          "C08299",
+          "3581141"
+        ]
+      },
+      {
+        "claim": "Account has zero historical transactions, suggesting a new or dormant account.",
+        "source": "document",
+        "ref": "CUSTOMER PROFILE: Total historical transactions: 0",
+        "entity_ids": [
+          "C08299"
+        ]
+      },
+      {
+        "claim": "Transaction device profile is null/unknown.",
+        "source": "graph",
+        "ref": "DEVICE PROFILE: null",
+        "entity_ids": [
+          "3581141"
+        ]
+      }
+    ],
+    "similar_prior_cases": [],
+    "summary": "Customer C08299 reported unauthorized $30.02 transaction on new account with unknown device profile. Fraud probability of 0.85 confirmed via customer denial and pattern analysis. Card blocked at L1 level and case created for resolution.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-009"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: Customer denied transaction with fraud probability 0.85 > 0.70"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R2: Customer denial requires case creation for investigation"
+      }
+    ],
+    "final": [
+      {
+        "action": "CLOSE_NO_FRAUD",
+        "route": "auto",
+        "reason": "Fraud verified, card secured, and dispute resolved"
+      }
+    ],
+    "what_changed": "Customer report confirmed fraud on new account transaction with unknown device profile."
+  },
+  "sar": {
+    "file": false,
+    "reason": "Exposure $30.02 < $1000 and no shared device detected per SAR rules.",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 30.02,
+    "activity_dates": []
+  },
+  "stop_reason": "Probability threshold met (>=0.85) with 3 independent signals.",
+  "tool_calls": 7,
+  "tokens": 9840,
+  "latency_s": 196.2
+}

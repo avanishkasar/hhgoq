@@ -1,0 +1,98 @@
+{
+  "case_id": "HHG-005",
+  "case": {
+    "status": "closed_legitimate",
+    "verdict": "uncertain",
+    "fraud_probability": 0.65,
+    "pattern": "card_not_present_new_device",
+    "pattern_description": "Online purchase on new account with unverified device.",
+    "affected_txn_ids": [
+      "3523199"
+    ],
+    "first_suspicious_txn_id": "3523199",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 100.07,
+    "evidence": [
+      {
+        "claim": "New account with online purchase",
+        "source": "document",
+        "ref": "Total historical transactions: 0",
+        "entity_ids": [
+          "C02923"
+        ]
+      },
+      {
+        "claim": "Unknown device profile associated with transaction",
+        "source": "graph",
+        "ref": "DEVICE PROFILE: null",
+        "entity_ids": [
+          "C02923-K1",
+          "3523199"
+        ]
+      },
+      {
+        "claim": "[SIMULATED] Customer contacted by SMS; responded that the transaction was authorized by them.",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": []
+      },
+      {
+        "claim": "New account with zero history",
+        "source": "customer",
+        "ref": "Total historical transactions: 0",
+        "entity_ids": [
+          "C02923"
+        ]
+      },
+      {
+        "claim": "Unknown device profile",
+        "source": "graph",
+        "ref": "Device Profile: null",
+        "entity_ids": [
+          "C02923-K1"
+        ]
+      }
+    ],
+    "similar_prior_cases": [],
+    "summary": "Real-time model flagged new account online purchase at risk score 0.54 with unknown device profile. Customer verified authorization via SMS response after verification step. Transaction cleared as legitimate per R3 rule.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-005"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 2,
+      "assumed_response": "Customer contacted by SMS; responded that the transaction was authorized by them."
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1 - fraud_prob 0.65 < 0.70 on weak signal"
+      }
+    ],
+    "final": [
+      {
+        "action": "CLOSE_NO_FRAUD",
+        "route": "auto",
+        "reason": "R3 - customer confirmed authorization"
+      }
+    ],
+    "what_changed": "Customer verified transaction as authorized via SMS response"
+  },
+  "sar": {
+    "file": false,
+    "reason": "Exposure $100.07 < $1000 threshold; single card; documented pattern",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 100.07,
+    "activity_dates": []
+  },
+  "stop_reason": "Customer confirmed auth but new account/device requires analyst review of IP/billing match.",
+  "tool_calls": 8,
+  "tokens": 13696,
+  "latency_s": 316.1
+}

@@ -1,0 +1,142 @@
+{
+  "case_id": "HHG-012",
+  "case": {
+    "status": "closed_legitimate",
+    "verdict": "uncertain",
+    "fraud_probability": 0.6,
+    "pattern": "card_not_present_new_device",
+    "pattern_description": "New account/device with moderate risk score and no prior velocity context.",
+    "affected_txn_ids": [
+      "3553342"
+    ],
+    "first_suspicious_txn_id": "3553342",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 30.91,
+    "evidence": [
+      {
+        "claim": "New Account with Zero History",
+        "source": "document",
+        "ref": "Customer Profile: Total historical transactions: 0",
+        "entity_ids": [
+          "C05876",
+          "3553342"
+        ]
+      },
+      {
+        "claim": "Unknown Device Fingerprint",
+        "source": "graph|document",
+        "ref": "DEVICE PROFILE: null",
+        "entity_ids": []
+      },
+      {
+        "claim": "[SIMULATED] Customer contacted by SMS; responded that the transaction was authorized by them.",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": []
+      },
+      {
+        "claim": "High risk score",
+        "source": "trigger",
+        "ref": "risk_score — 0.55",
+        "entity_ids": [
+          "3553342"
+        ]
+      },
+      {
+        "claim": "Unknown device profile",
+        "source": "device_profile",
+        "ref": "Device Profile: null",
+        "entity_ids": [
+          "C05876-K2"
+        ]
+      },
+      {
+        "claim": "New account status",
+        "source": "customer",
+        "ref": "Total historical transactions: 0",
+        "entity_ids": [
+          "C05876"
+        ]
+      },
+      {
+        "claim": "[SIMULATED] Analyst confirms no additional account flags in the past 30 days.",
+        "source": "customer",
+        "ref": "evidence_request:2",
+        "entity_ids": []
+      },
+      {
+        "claim": "New account with null device profile",
+        "source": "document|customer",
+        "ref": "Customer Profile: Total historical transactions: 0, Device Profile: null",
+        "entity_ids": [
+          "C05876-K2",
+          "3553342"
+        ]
+      },
+      {
+        "claim": "Region mismatch on first use",
+        "source": "graph",
+        "ref": "Billing Region: None vs Txn Region 494.0",
+        "entity_ids": [
+          "3553342"
+        ]
+      },
+      {
+        "claim": "High risk score on new account with null device profile",
+        "source": "document|customer",
+        "ref": "3553342, C05876-K2, C05876",
+        "entity_ids": [
+          "3553342",
+          "C05876-K2",
+          "C05876"
+        ]
+      }
+    ],
+    "similar_prior_cases": [],
+    "summary": "New account transaction triggered risk_score 0.55 with unknown device profile. Customer verified authorization via SMS after initial contact. No additional flags found in past 30 days. Case closed as legitimate.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-012"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 2,
+      "assumed_response": "Customer contacted by SMS; responded that the transaction was authorized by them."
+    },
+    {
+      "type": "analyst_info",
+      "asked_after_step": 2,
+      "assumed_response": "Analyst confirms no additional account flags in the past 30 days."
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1: fraud_prob 0.6 < 0.70 on weak signal, verify before block"
+      }
+    ],
+    "final": [
+      {
+        "action": "CLOSE_NO_FRAUD",
+        "route": "auto",
+        "reason": "R3: Customer confirmed authorization via SMS"
+      }
+    ],
+    "what_changed": "Customer responded to verification confirming transaction was authorized by them."
+  },
+  "sar": {
+    "file": false,
+    "reason": "Exposure $30.91 < $1000, single card, no shared device per R2/R6 criteria",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 30.91,
+    "activity_dates": []
+  },
+  "stop_reason": "LLM assessment failed; defaulting to uncertain.",
+  "tool_calls": 10,
+  "tokens": 26993,
+  "latency_s": 628.3
+}

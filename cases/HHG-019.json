@@ -1,0 +1,81 @@
+{
+  "case_id": "HHG-019",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.94,
+    "pattern": "card_testing",
+    "pattern_description": "Rapid velocity micro-authorization burst followed by high-risk checkout on new merchant.",
+    "affected_txn_ids": [
+      "3503878"
+    ],
+    "first_suspicious_txn_id": "3503878",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 99.92,
+    "evidence": [
+      {
+        "claim": "Trigger event: risk_score 0.90 (online)",
+        "source": "trigger",
+        "ref": "txn:3503878",
+        "entity_ids": [
+          "C07987",
+          "3503878"
+        ]
+      },
+      {
+        "claim": "Card C07987-K2 associated with Customer C07987",
+        "source": "graph",
+        "ref": "TigerGraph: OWNS edge",
+        "entity_ids": [
+          "C07987",
+          "C07987-K2"
+        ]
+      }
+    ],
+    "similar_prior_cases": [],
+    "summary": "Transaction 3503878 flagged at critical 0.90 risk score. TigerGraph sequence analysis revealed 5 micro-auth testing attempts within 2 minutes. Card terminated and merchant gateway blacklisted.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-019"
+  },
+  "evidence_requests": [
+    {
+      "type": "analyst_info",
+      "asked_after_step": 1,
+      "assumed_response": "Merchant ID identified as known testing gateway in fraud intel database."
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "BLOCK_CARD_PERMANENT",
+        "route": "auto",
+        "reason": "R2: Extreme risk score 0.90 exceeding automated kill threshold"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD_PERMANENT_AND_FLAG_MERCHANT",
+        "route": "L1",
+        "reason": "R5: Card testing sequence confirmed; merchant ID added to automated watchlist"
+      }
+    ],
+    "what_changed": "Graph query revealed 5 rapid zero-dollar authorization pings preceding the $99.92 transaction."
+  },
+  "sar": {
+    "file": false,
+    "reason": "Exposure $99.92 below $1,000 threshold",
+    "narrative": "",
+    "subjects": [
+      "C07987"
+    ],
+    "total_amount_usd": 0.0,
+    "activity_dates": [
+      "2016-12-01"
+    ]
+  },
+  "stop_reason": "Policy threshold satisfied: definitive evidence and action determined.",
+  "tool_calls": 6,
+  "tokens": 2840,
+  "latency_s": 14.2
+}

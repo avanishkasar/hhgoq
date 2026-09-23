@@ -1,0 +1,81 @@
+{
+  "case_id": "HHG-016",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.9,
+    "pattern": "card_not_present_fraud",
+    "pattern_description": "Customer confirmed unauthorized digital transaction on card C09988-K1.",
+    "affected_txn_ids": [
+      "3534820"
+    ],
+    "first_suspicious_txn_id": "3534820",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 59.67,
+    "evidence": [
+      {
+        "claim": "Trigger event: customer_report ($59.67 unauthorized purchase)",
+        "source": "trigger",
+        "ref": "txn:3534820",
+        "entity_ids": [
+          "C09988",
+          "3534820"
+        ]
+      },
+      {
+        "claim": "Card C09988-K1 associated with Customer C09988",
+        "source": "graph",
+        "ref": "TigerGraph: OWNS edge",
+        "entity_ids": [
+          "C09988",
+          "C09988-K1"
+        ]
+      }
+    ],
+    "similar_prior_cases": [],
+    "summary": "Customer C09988 reported unauthorized $59.67 charge on txn 3534820. Agent blocked card C09988-K1, initiated dispute under Regulation E, and dispatched replacement card.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-016"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 1,
+      "assumed_response": "Customer signed online affidavit confirming unauthorized card presence."
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "BLOCK_CARD_TEMPORARY",
+        "route": "auto",
+        "reason": "R4: Direct customer report of unauthorized charge"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD_PERMANENT_AND_CHARGEBACK",
+        "route": "L1",
+        "reason": "R7: Customer affidavit received; initiation of dispute and card reissue"
+      }
+    ],
+    "what_changed": "Formal customer dispute submitted; initiated dispute lifecycle and replaced compromised credential."
+  },
+  "sar": {
+    "file": false,
+    "reason": "Exposure $59.67 below FinCEN $1,000 threshold",
+    "narrative": "",
+    "subjects": [
+      "C09988"
+    ],
+    "total_amount_usd": 0.0,
+    "activity_dates": [
+      "2016-12-01"
+    ]
+  },
+  "stop_reason": "Policy threshold satisfied: definitive evidence and action determined.",
+  "tool_calls": 6,
+  "tokens": 2840,
+  "latency_s": 14.2
+}

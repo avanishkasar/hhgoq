@@ -1,0 +1,89 @@
+{
+  "case_id": "HHG-011",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.85,
+    "pattern": "card_not_present_new_device",
+    "pattern_description": "New account with unknown device and customer report of online-style unauthorized use.",
+    "affected_txn_ids": [
+      "3583368"
+    ],
+    "first_suspicious_txn_id": "3583368",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 131.3,
+    "evidence": [
+      {
+        "claim": "Customer reported unauthorized $131.30 purchase",
+        "source": "document",
+        "ref": "customer_report",
+        "entity_ids": [
+          "C11923",
+          "3583368"
+        ]
+      },
+      {
+        "claim": "Account has 0 historical transactions (likely new)",
+        "source": "document",
+        "ref": "Customer Profile",
+        "entity_ids": [
+          "C11923"
+        ]
+      },
+      {
+        "claim": "Device profile is null/unknown",
+        "source": "graph",
+        "ref": "Device Profile",
+        "entity_ids": [
+          "C11923-K2"
+        ]
+      }
+    ],
+    "similar_prior_cases": [],
+    "summary": "Customer reported unauthorized $131.30 purchase on new card C11923-K2 with unknown device. High fraud probability (0.85) confirmed via R2 flow. Card blocked L1 and case created.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-011"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: Customer denies + Fraud Prob > 0.70"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "Fraud investigation required per R2"
+      }
+    ],
+    "final": [
+      {
+        "action": "CLOSE_NO_FRAUD",
+        "route": "auto",
+        "reason": "Case resolved after verification and blocking"
+      }
+    ],
+    "what_changed": "Customer report verified, fraud probability 0.85 confirmed on new account."
+  },
+  "sar": {
+    "file": true,
+    "reason": "Fraud confirmed with unknown device profile on new account (R2/R9).",
+    "narrative": "Customer C11923 reported unauthorized $131.30 purchase. Investigation showed 0 history and null device. Fraud prob 0.85 confirmed via R2 flow.",
+    "subjects": [
+      "C11923",
+      "C11923-K2"
+    ],
+    "total_amount_usd": 131.3,
+    "activity_dates": [
+      "2023-10-27",
+      "2023-10-28"
+    ]
+  },
+  "stop_reason": "Probability threshold (>=0.85) met with 3 independent signals.",
+  "tool_calls": 7,
+  "tokens": 10322,
+  "latency_s": 256.0
+}

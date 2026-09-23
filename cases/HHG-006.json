@@ -1,0 +1,100 @@
+{
+  "case_id": "HHG-006",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.85,
+    "pattern": "card_not_present_new_device",
+    "pattern_description": "Transaction on a card with sparse history and undefined device profile suggests new device usage or online purchase inconsistency.",
+    "affected_txn_ids": [
+      "3476682"
+    ],
+    "first_suspicious_txn_id": "3476682",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 482.12,
+    "evidence": [
+      {
+        "claim": "[SIMULATED] Customer confirms they did not make this transaction and states their card has been in their possession at all times.",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": []
+      },
+      {
+        "claim": "Customer reported unauthorized $482.12 purchase on txn 3476682",
+        "source": "document",
+        "ref": "C07297 message: 'I never made this $482.12 purchase...'",
+        "entity_ids": [
+          "C07297",
+          "3476682"
+        ]
+      },
+      {
+        "claim": "Account has minimal historical transaction history (Total: 0)",
+        "source": "document",
+        "ref": "Customer Profile - Total historical transactions: 0",
+        "entity_ids": [
+          "C07297"
+        ]
+      },
+      {
+        "claim": "Device profile is null/unknown for flagged transaction",
+        "source": "graph",
+        "ref": "Device Profile - null",
+        "entity_ids": [
+          "3476682"
+        ]
+      }
+    ],
+    "similar_prior_cases": [],
+    "summary": "Customer confirmed unauthorized $482.12 transaction on a card with minimal history and unknown device profile. Fraud probability of 0.85 triggered blocking at L1 level and case creation. SAR filed due to undocumented pattern despite exposure under $1000.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-006"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 2,
+      "assumed_response": "Customer confirms they did not make this transaction and states their card has been in their possession at all times."
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: Customer confirmed denial, exposure $482.12 ≤ $2500"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R2: Fraud confirmed with minimal history and new device pattern"
+      }
+    ],
+    "what_changed": "Customer confirmed unauthorized transaction on card with sparse history and unknown device profile."
+  },
+  "sar": {
+    "file": true,
+    "reason": "Fraud confirmed with exposure $482.12 and undocumented 'card_not_present_new_device' pattern (R9).",
+    "narrative": "Customer C07297 reported unauthorized $482.12 purchase on transaction 3476682. Account had minimal history (Total: 0) and null device profile. Customer confirmed non-involvement after validation. Fraud probability 0.85 indicates strong suspicion.",
+    "subjects": [
+      "C07297"
+    ],
+    "total_amount_usd": 482.12,
+    "activity_dates": [
+      "2024-05-20",
+      "2024-05-20"
+    ]
+  },
+  "stop_reason": "Probability threshold met (>=0.85) with multiple independent signals including customer confirmation.",
+  "tool_calls": 8,
+  "tokens": 14603,
+  "latency_s": 340.0
+}
